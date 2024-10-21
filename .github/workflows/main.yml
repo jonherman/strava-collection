@@ -40,11 +40,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-        # trigger the tests here
-        echo 'Running unit tests'
-        cd authorize
-        npm install
-        npm run test
+          # trigger the tests here
+          echo 'Running unit tests'
+          cd authorize
+          npm install
+          npm run test
 
   delete-feature:
     if: startsWith(github.event.ref, 'feature') && github.event_name == 'delete'
