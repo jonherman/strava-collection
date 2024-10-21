@@ -10,7 +10,7 @@ on:
       - 'feature**'
 
 env:
-  SAM_TEMPLATE: template.yaml
+  SAM_TEMPLATE: sam/template.yaml
   TESTING_STACK_NAME: strava-collection-dev
   TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-dev-pipel-PipelineExecutionRole-6pFOKlO8vqCX
   TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-dev-p-CloudFormationExecutionRo-QNu75KExT9dd
