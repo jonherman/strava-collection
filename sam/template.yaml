@@ -35,7 +35,7 @@ Outputs:
   AuthorizeApi:
     Description: API Gateway endpoint URL for Prod stage for Authorize function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/authorize/"
-  HelloWorldFunction:
+  AuthorizeFunction:
     Description: Authorize Lambda Function ARN
     Value: !GetAtt AuthorizeFunction.Arn
   AuthorizeFunctionIamRole:
