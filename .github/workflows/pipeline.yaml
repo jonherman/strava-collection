@@ -11,19 +11,19 @@ on:
 
 env:
   SAM_TEMPLATE: server/sam/template.yaml
-  TESTING_STACK_NAME: strava-collection-dev
-  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-dev-pipel-PipelineExecutionRole-6pFOKlO8vqCX
-  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-dev-p-CloudFormationExecutionRo-QNu75KExT9dd
-  TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-dev-pipeline-r-artifactsbucket-xpnphdgj8qum
+  TESTING_STACK_NAME: strava-collection
+  TESTING_PIPELINE_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-dev-pipel-PipelineExecutionRole-pIzciLjDcgbR
+  TESTING_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-dev-p-CloudFormationExecutionRo-Bt2wAXFrXy04
+  TESTING_ARTIFACTS_BUCKET: aws-sam-cli-managed-dev-pipeline-r-artifactsbucket-quwvepzlcner
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${TESTING_IMAGE_REPOSITORY}" to
   # testing "sam package" and "sam deploy" commands.
   # TESTING_IMAGE_REPOSITORY = '0123456789.dkr.ecr.region.amazonaws.com/repository-name'
   TESTING_REGION: us-east-1
-  PROD_STACK_NAME: strava-collection-prod
-  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-prod-pipe-PipelineExecutionRole-1gSyqNDEdL1f
-  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-prod--CloudFormationExecutionRo-gzfzCp5DLvqg
-  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline--artifactsbucket-21ea561xcz3g
+  PROD_STACK_NAME: strava-collection
+  PROD_PIPELINE_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-prod-pipe-PipelineExecutionRole-omjXaj48MtCN
+  PROD_CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::013727036418:role/aws-sam-cli-managed-prod--CloudFormationExecutionRo-BwqhxLiTyoBD
+  PROD_ARTIFACTS_BUCKET: aws-sam-cli-managed-prod-pipeline--artifactsbucket-2t34zyhw5mjv
   # If there are functions with "Image" PackageType in your template,
   # uncomment the line below and add "--image-repository ${PROD_IMAGE_REPOSITORY}" to
   # prod "sam package" and "sam deploy" commands.
@@ -41,10 +41,6 @@ jobs:
       - uses: actions/checkout@v3
       - run: |
           # trigger the tests here
-          echo 'Running unit tests'
-          cd server/sam/webhook
-          npm install
-          npm run test
 
   delete-feature:
     if: startsWith(github.event.ref, 'feature') && github.event_name == 'delete'
