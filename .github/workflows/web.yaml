@@ -7,9 +7,6 @@ on:
       branches:
         - 'main'
         - 'feature**'
-    delete:
-      branches:
-        - 'feature**'
 
 permissions:
   id-token: write
