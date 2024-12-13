@@ -1,10 +1,8 @@
 name: Server
 
 on:
-  workflow_call: # allows calling this workflow from another workflow
-  secrets:
-    AWS_ACCESS_KEY_ID: { required: true }
-    AWS_SECRET_ACCESS_KEY: { required: true }
+  workflow_call:
+
   push:
     branches:
       - 'main'
