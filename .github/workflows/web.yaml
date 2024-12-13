@@ -28,6 +28,7 @@ jobs:
           node-version: 20
 
       - name: Install Yarn
+        working-directory: client/web
         run: npm install -g yarn
 
       - name: Install dependencies
