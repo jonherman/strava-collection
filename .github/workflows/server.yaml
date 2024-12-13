@@ -1,8 +1,6 @@
 name: Server
 
 on:
-  workflow_call:
-
   push:
     branches:
       - 'main'
