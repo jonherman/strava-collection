@@ -32,9 +32,11 @@ jobs:
         run: npm install -g yarn
 
       - name: Install dependencies
+        working-directory: client/web
         run: yarn install --frozen-lockfile
 
       - name: Build
+        working-directory: client/web
         run: yarn build
 
       - name: Configure AWS Credentials
