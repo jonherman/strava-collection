@@ -1,6 +1,11 @@
-name: Build and Deploy Web App to S3 and CloudFront
+name: Web
 
 on:
+    workflow_call: # allows calling this workflow from another workflow
+        secrets:
+            AWS_ACCESS_KEY_ID: { required: true }
+            AWS_SECRET_ACCESS_KEY: { required: true }
+  
     push:
       branches:
         - 'main'
@@ -41,11 +46,14 @@ jobs:
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
+        secrets:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}        
         with:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: us-east-1
-            
+
       - name: Deploy to S3
         run: aws s3 sync ./out s3://strava-collection-web-customresources-s3bucketroot-9iy9k8wwphft
 
