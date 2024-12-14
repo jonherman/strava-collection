@@ -31,12 +31,12 @@ async function getAccessToken(clientId:string, clientSecret:string, code:string)
 
 export default function Home() {
   const searchParams = useSearchParams();
-  let code = searchParams.get('code');
+  const code = searchParams.get('code');
   console.log("Authorization code is: " + code);
   const clientId = '133314';
   const clientSecret = '76555058917134e613269637de2fb70f9a5ffa44';
-  let redirectUrl = `http://stravacollection.com:3000?approval_prompt=force&scope=activity:write`;
-  let enableURL = `http://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUrl}`;
+  const redirectUrl = `http://stravacollection.com:3000?approval_prompt=force&scope=activity:write`;
+  const enableURL = `http://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUrl}`;
   if (code) {
     getAccessToken(clientId, clientSecret, code);
   }
