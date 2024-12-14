@@ -44,6 +44,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy to S3
+        working-directory: client/web
         run: aws s3 sync ./out s3://strava-collection-web-customresources-s3bucketroot-9iy9k8wwphft
 
       - name: Invalidate CloudFront Cache
