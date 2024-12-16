@@ -37,9 +37,10 @@ function Fallback() {
 function EnableStravaButton() {
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
+  console.log("Authorization code is: " + code);
   const clientId = '133314';
   const clientSecret = '76555058917134e613269637de2fb70f9a5ffa44';
-  const redirectUrl = `http://stravacollection.com:3000?approval_prompt=force&scope=activity:write`;
+  const redirectUrl = `http://localhost:3000?approval_prompt=force&scope=activity:write`;
   const enableURL = `http://www.strava.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUrl}`;
   if (code) {
     getAccessToken(clientId, clientSecret, code);
