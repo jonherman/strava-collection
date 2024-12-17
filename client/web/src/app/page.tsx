@@ -39,7 +39,7 @@ async function getAccessToken(clientId:string, clientSecret:string, code:string)
     }
     const response_json = await response.json();
     if (response_json) {
-      let token:OAuthTokenData = new OAuthTokenData(
+      const token:OAuthTokenData = new OAuthTokenData(
         response_json["access_token"],
         response_json["refresh_token"],
         response_json["expires_at"],
