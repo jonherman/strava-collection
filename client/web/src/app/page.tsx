@@ -3,6 +3,20 @@
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react'
 
+class OAuthTokenData {
+  accessToken: string = '';
+  refreshToken: string = '';
+  expirationDate: number = 0;
+  expirationIn: number = 0;
+
+  constructor(accessToken: string, refreshToken: string, expirationDate: number, expirationIn: number) {
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
+    this.expirationDate = expirationDate;
+    this.expirationIn = expirationIn;
+  }
+}
+
 async function getAccessToken(clientId:string, clientSecret:string, code:string) {
   const url = "https://www.strava.com/oauth/token";
   try {
@@ -23,8 +37,16 @@ async function getAccessToken(clientId:string, clientSecret:string, code:string)
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-    const json = await response.json();
-    console.log(json);
+    const response_json = await response.json();
+    if (response_json) {
+      let token:OAuthTokenData = new OAuthTokenData(
+        response_json["access_token"],
+        response_json["refresh_token"],
+        response_json["expires_at"],
+        response_json["expires_in"]
+      );
+      console.log(token);
+    }
   } catch (error) {
     console.log(error);
   }
