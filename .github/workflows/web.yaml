@@ -24,7 +24,7 @@ jobs:
       with:
         context: ./client/web
         push: true
-        tags: "latest"
+        tags: "jonherman/stravacollection:latest"
 
     - name: SSH into EC2 and deploy
       uses: appleboy/ssh-action@master
