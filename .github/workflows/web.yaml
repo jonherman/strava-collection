@@ -1,51 +1,35 @@
-name: Web
+name: Deploy Web
 
 on:
-    push:
-      branches:
-        - 'main'
-        - 'feature**'
-
-permissions:
-  id-token: write
-  contents: read
+  push:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
-    name: Build and Deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Install Yarn
-        working-directory: client/web
-        run: npm install -g yarn
+    - name: Build the Docker image
+      run: docker build -t jonherman/stravacollection:latest .
 
-      - name: Install dependencies
-        working-directory: client/web
-        run: yarn install --frozen-lockfile
+    - name: Push the Docker image
+      run: docker push jonherman/stravacollection:latest
 
-      - name: Build
-        working-directory: client/web
-        run: yarn build
-        
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Deploy to S3
-        working-directory: client/web
-        run: aws s3 sync ./out s3://strava-collection-web-customresources-s3bucketroot-9iy9k8wwphft
-
-      - name: Invalidate CloudFront Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+    - name: SSH into EC2 and deploy
+      uses: appleboy/ssh-action@v0.1.3
+      with:
+        host: 52.91.174.188
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          docker pull jonherman/stravacollection:latest
+          docker stop stravacollection || true
+          docker rm stravacollection || true
+          docker run -d --name stravacollection -p 80:8080 jonherman/stravacollection:latest
