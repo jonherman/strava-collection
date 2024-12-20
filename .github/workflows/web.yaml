@@ -8,6 +8,12 @@ on:
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
+    services:
+        docker:
+          image: docker:dind # Docker in Docker
+          ports:
+            - 2375:2375 # Expose the Docker daemon port (not recommended for production)
+          options: --privileged # Necessary for Docker in Docker    
 
     steps:
     - name: Checkout code
