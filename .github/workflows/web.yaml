@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          docker pull jonherman/stravacollection:latest
-          docker stop stravacollection || true
-          docker rm stravacollection || true
-          docker run -d --name stravacollection -p 80:8080 jonherman/stravacollection:latest
+          sudo docker pull jonherman/stravacollection:latest
+          sudo docker stop stravacollection || true
+          sudo docker rm stravacollection || true
+          sudo docker run -d --name stravacollection -p 80:8080 jonherman/stravacollection:latest
